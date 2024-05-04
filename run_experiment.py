@@ -61,7 +61,7 @@ def main(args):
     
     # Evaluate
     accuracy = evaluate(dataset.test_gold_data, predictions)
-    logging.info("Final accuracy on test dataset: {} %".format())
+    logging.info("Final accuracy on the test dataset: {} %".format(accuracy*100))
     scores = {
         "{}_{}".format(args.dataset, args.model):
         {
@@ -69,7 +69,7 @@ def main(args):
         }
     }
     final_json = json.dumps(scores, indent = 4) 
-    print(scores)
+    print(final_json)
 
 
 if __name__ == '__main__':
