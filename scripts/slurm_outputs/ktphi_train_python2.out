@@ -7,3 +7,19 @@
 2024-05-05 16:36:18 INFO     Total 7418640 tokens, accuracy: 0.78
 2024-05-05 16:36:18 INFO     Final accuracy on the test dataset: 0.7796712065823386 %
 2024-05-05 16:36:21 INFO     python dataset was loaded successfully
+2024-05-05 17:48:21 INFO     predictions were generated
+2024-05-05 17:48:34 INFO     Total 35925335 tokens, accuracy: 0.0
+2024-05-05 17:48:34 INFO     Final accuracy on the test dataset: 0.0022296243027378868 %
+{
+    "kotlin_phi": {
+        "accuracy": 0.007796712065823386
+    }
+}
+{
+    "python_phi": {
+        "accuracy": 2.229624302737887e-05
+    }
+}
+slurmstepd: error: common_file_write_uint32s: write pid 2726262 to /sys/fs/cgroup/cgroup.procs failed: Device or resource busy
+slurmstepd: error: Unable to move pid 2726262 to init root cgroup /sys/fs/cgroup
+slurmstepd: error: error unlocking cgroup '/sys/fs/cgroup/system.slice/slurmstepd.scope' : Bad file descriptor
