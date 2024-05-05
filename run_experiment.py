@@ -29,14 +29,14 @@ parser.add_argument('--seed', type=int, help='random seed', default=54)
 
 
 MODELS = {
-    "phi": lambda x: LLMWrapper("../../models/phi-1_5"),
-    "stablecode": lambda x: LLMWrapper("../../models/stablecode-completion-alpha-3b"),
-    "starcoder2": lambda x: LLMWrapper("../../models/starcoder2-3b")
+    "phi": lambda: LLMWrapper("../../models/phi-1_5"),
+    "stablecode": lambda: LLMWrapper("../../models/stablecode-completion-alpha-3b"),
+    "starcoder2": lambda: LLMWrapper("../../models/starcoder2-3b")
 }
 
 DATASETS = {
-    "python": lambda x: PythonDataset(dataset_name="code_x_glue_cc_code_completion_token"),
-    "kotlin": lambda x: KotlinDataset(dataset_path="./data/kotlin.json")
+    "python": lambda: PythonDataset(dataset_name="code_x_glue_cc_code_completion_token"),
+    "kotlin": lambda: KotlinDataset(dataset_path="./data/kotlin.json")
 }
 
 
@@ -49,11 +49,11 @@ def main(args):
         return
     
     # Load dataset
-    dataset = DATASETS[args.dataset](1) # ToDo Remove lambda x and the random parameter 1
+    dataset = DATASETS[args.dataset]()
     logging.info("{} dataset was loaded successfully".format(args.dataset))
 
     # Load model and predict
-    model = MODELS[args.model](1) # ToDo Remove lambda x and the random parameter 1
+    model = MODELS[args.model]()
     logging.info("{} model was loaded successfully".format(args.model))
     if args.train:
         model.train(dataset.train, dataset.dev, disable_tqdm=args.disable_tqdm)
@@ -75,7 +75,7 @@ def main(args):
 
     
     if args.evaluate_on_python_data: # kind of messy but the task description asks for this
-        dataset = DATASETS["python"](1) # ToDo Remove lambda x and the random parameter 1
+        dataset = DATASETS["python"]() 
         logging.info("{} dataset was loaded successfully".format("python"))
         gold_data, predictions = model.predict(dataset.test, disable_tqdm=args.disable_tqdm)
         logging.info("predictions were generated")

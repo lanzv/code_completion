@@ -2,3 +2,8 @@
 2024-05-05 11:28:18 INFO     kotlin dataset was loaded successfully
 2024-05-05 11:28:23 INFO     We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
 2024-05-05 11:28:28 INFO     phi model was loaded successfully
+2024-05-05 16:15:29 INFO     phi model was trained successfully
+2024-05-05 16:36:14 INFO     predictions were generated
+2024-05-05 16:36:18 INFO     Total 7418640 tokens, accuracy: 0.78
+2024-05-05 16:36:18 INFO     Final accuracy on the test dataset: 0.7796712065823386 %
+2024-05-05 16:36:21 INFO     python dataset was loaded successfully
