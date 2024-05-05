@@ -7,13 +7,11 @@ def evaluate(gold_data, predictions):
     gold_data: list of lines, one line ~ string of gold tokens separated by spaces
     predictions: list of lines, one line ~  string of prediced tokens separated by spaces
     """
-    assert len(preds) == len(gts), f"Samples of predictions and answers are not equal, {len(preds)}: {len(gts)}"
+    assert len(predictions) == len(gold_data), f"Samples of predictions and answers are not equal, {len(preds)}: {len(gts)}"
 
     total = 0
     correct = 0.0
     for pred, gt in zip(predictions, gold_data):
-        pred = pred.split()
-        gt = gt.split()
         assert len(pred) == len(gt), f"Sequence length of prediction and answer are not equal, {len(pred)}: {len(gt)}"
         for x, y in zip(pred, gt):
             if y not in ["<s>", "</s>", "<EOL>", "<pad>"]:
@@ -21,6 +19,6 @@ def evaluate(gold_data, predictions):
                 if x == y:
                     correct += 1
     
-    logger.info(f"Total {total} tokens, accuracy: {round(correct/total*100, 2)}")
+    logging.info(f"Total {total} tokens, accuracy: {round(correct/total*100, 2)}")
 
     return float(correct)/total

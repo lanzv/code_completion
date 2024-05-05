@@ -17,7 +17,7 @@ logging.getLogger().setLevel(logging.INFO)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='python')
-parser.add_argument('--model', type=str, default='ClinicalBERT')
+parser.add_argument('--model', type=str, default='phi')
 parser.add_argument('--train', type=bool, default=False)
 parser.add_argument('--seed', type=int, help='random seed', default=54)
 
@@ -47,20 +47,20 @@ def main(args):
         return
     
     # Load dataset
-    dataset = DATASETS[args.dataset]()
+    dataset = DATASETS[args.dataset](1) # ToDo Remove lambda x and the random parameter 1
     logging.info("{} dataset was loaded successfully".format(args.dataset))
 
     # Load model and predict
-    model = MODELS[args.model]()
+    model = MODELS[args.model](1) # ToDo Remove lambda x and the random parameter 1
     logging.info("{} model was loaded successfully".format(args.model))
     if args.train:
-        model.train(dataset.train, dataset.dev)
+        model.train(dataset.train, dataset.dev, disable_tqdm=True)
         logging.info("{} model was trained successfully".format(args.model))
-    predictions = model.predict(dataset.test)
+    gold_data, predictions = model.predict(dataset.test, disable_tqdm=True)
     logging.info("predictions were generated")
     
     # Evaluate
-    accuracy = evaluate(dataset.test_gold_data, predictions)
+    accuracy = evaluate(gold_data, predictions)
     logging.info("Final accuracy on the test dataset: {} %".format(accuracy*100))
     scores = {
         "{}_{}".format(args.dataset, args.model):

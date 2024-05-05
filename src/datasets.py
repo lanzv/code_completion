@@ -1,10 +1,12 @@
+from datasets import load_dataset
 
 class PythonDataset:
     def __init__(self, dataset_name):
-        self.train = None
-        self.test = None
-        self.dev = None
-        pass
+        dataset = load_dataset(dataset_name, "python")
+        self.train = dataset["train"].train_test_split(test_size=0.05)["train"]
+        self.dev = dataset["train"].train_test_split(test_size=0.05)["test"]
+        self.test = dataset["test"]
+
 
 
 class KotlinDataset:
@@ -12,4 +14,4 @@ class KotlinDataset:
         self.train = None
         self.test = None
         self.dev = None
-        pass
+        self.test_gold_data = None
