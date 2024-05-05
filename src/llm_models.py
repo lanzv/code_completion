@@ -13,6 +13,24 @@ class LLMWrapper:
         self.model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto", device_map="auto")
 
     def train(self, train, dev, epochs=3, batch_size=2, learning_rate=5e-4, disable_tqdm=False):
+        """
+        Fine-tune the give model
+
+        Parameters
+        ----------
+        train : Dataset
+            training dataset where each sample contains rows ["id", "path", "code"]
+        dev : Dataset
+            dev dataset where each sample contains rows ["id", "path", "code"]
+        epochs : int
+            number of training epochs
+        batch_size : int
+            batch size of the training (be careful due to GB RAM quota)
+        learning_rate : float
+            learning rate of the trainng
+        disable_tqdm : boolean
+            True for showing tqdm loading bar, False in order to mute it
+        """
         train_dataloader = DataLoader(dataset=train, batch_size=batch_size, shuffle=True, collate_fn=self.__collate_tokenize)
 
         self.model.train()
@@ -32,12 +50,30 @@ class LLMWrapper:
                 optimizer.zero_grad()
                 self.model.zero_grad()
             # Evaluate dev after each epoch
-            #gd, prds = self.predict(dev, disable_tqdm)
-            #logging.info("Epoch: {} \t Dev accuracy: {}".format(i, evaluate(gd, prds)))
-            #self.model.train()
+            gd, prds = self.predict(dev, disable_tqdm)
+            logging.info("Epoch: {} \t Dev accuracy: {}".format(i, evaluate(gd, prds)))
+            self.model.train()
         
     
     def predict(self, test, batch_size=8, disable_tqdm=False):
+        """
+        Complete code in real time, and tokenize gold data as well as those predicted ones
+
+        Parameters
+        ----------
+        test : Dataset
+            test dataset where each sample contains rows ["id", "path", "code"]
+        batch_size : int
+            batch size of the training (be careful due to GB RAM quota)
+        disable_tqdm : boolean
+            True for showing tqdm loading bar, False in order to mute it
+        Returns
+        -------
+        gold_data : list of lists of tokens
+            ground truth data, list of all tokenized code samples 
+        final_predictions: 
+            model predictions, list of all tokenized code samples 
+        """
         self.model.eval()
         eval_dataloader = DataLoader(dataset=test, batch_size=batch_size, shuffle=False, collate_fn=self.__collate_tokenize)
         final_predictions = []

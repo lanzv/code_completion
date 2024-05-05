@@ -16,11 +16,11 @@ logging.getLogger().setLevel(logging.INFO)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', type=str, default='python')
-parser.add_argument('--model', type=str, default='phi')
-parser.add_argument('--train', type=bool, default=False)
-parser.add_argument('--disable_tqdm', type=bool, default=False)
-parser.add_argument('--evaluate_on_python_data', type=bool, default=False)
+parser.add_argument('--dataset', type=str, default='python', help='specify code of dataset.. [python, kotlin]')
+parser.add_argument('--model', type=str, default='phi', help='specify code of model .. [phi] (eventually others..)')
+parser.add_argument('--train', type=bool, default=False, help='True for finetuning model, otherwise False in case only pretrained model is used')
+parser.add_argument('--disable_tqdm', type=bool, default=False, help='True for muting the tqdm loading bar')
+parser.add_argument('--evaluate_on_python_data', type=bool, default=False, help='not only the args.dataset is measured on the trained model, but also the python dataset is measured')
 parser.add_argument('--seed', type=int, help='random seed', default=54)
 
 

@@ -3,9 +3,22 @@ import logging
 
 def evaluate(gold_data, predictions):
     """
-    Part of the official evaluation script (CodeXGLUE)
-    gold_data: list of lines, one line ~ string of gold tokens separated by spaces
-    predictions: list of lines, one line ~  string of prediced tokens separated by spaces
+    Evaluate the code completion datataset using the official 
+    (or more likely "official") evaluation script "provided" by CodeXGLUE
+    (not commented, not structured, but part of the official dataset code ... )
+
+    Adapted to our project goal and project structure, but evaluated the same way
+
+    Parameters
+    ----------
+    gold_data : list of lists of tokens
+        list of gold tokenized codes
+    predictions : list of lists of tokens
+        list of predicted tokenized codes
+    Returns
+    -------
+    accuracy : float
+        accuracy of correct tokens (ignoring <s>, </s>, <EOL>, <pad>)
     """
     assert len(predictions) == len(gold_data), f"Samples of predictions and answers are not equal, {len(preds)}: {len(gts)}"
 

@@ -17,9 +17,9 @@ logging.getLogger().setLevel(logging.INFO)
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--project_repo_url', type=str, default='https://github.com/JetBrains/kotlin')
-parser.add_argument('--project_directory', type=str, default='./large_kotlin_project')
-parser.add_argument('--dataset_file', type=str, default="kotlin.json")
+parser.add_argument('--project_repo_url', type=str, default='https://github.com/JetBrains/kotlin', help='url of the kotlin github repository')
+parser.add_argument('--project_directory', type=str, default='./large_kotlin_project', help='temporary directory of the kotlin project for dataset scraping')
+parser.add_argument('--dataset_file', type=str, default="kotlin.json", help='name of the file in the directory ./data of the final dataset')
 parser.add_argument('--seed', type=int, help='random seed', default=54)
 
 

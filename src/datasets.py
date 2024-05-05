@@ -3,6 +3,18 @@ import json
 import logging
 
 class PythonDataset:
+    """
+    Python code completion dataset
+    Load json file of Kotlin code, the final dataset contains following rows
+        'id': unique id number
+        'path': path of the original file from given kotlin project
+        'code': list of code tokens
+
+    public parameters
+        self.train
+        self.dev
+        self.test
+    """
     def __init__(self, dataset_name):
         dataset = load_dataset(dataset_name, "python")
         splited_train = dataset["train"].train_test_split(test_size=0.05, shuffle = False)
@@ -13,6 +25,18 @@ class PythonDataset:
 
 
 class KotlinDataset:
+    """
+    Kotlin code completion dataset
+    Load json file of Kotlin code, the final dataset contains following rows
+        'id': unique id number
+        'path': path of the original file from given kotlin project
+        'code': list of code tokens
+
+    public parameters
+        self.train
+        self.dev
+        self.test
+    """
     def __init__(self, dataset_path):
         with open(dataset_path, 'r') as f:
             dataset = json.load(f)
