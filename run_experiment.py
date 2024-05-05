@@ -54,9 +54,9 @@ def main(args):
     model = MODELS[args.model](1) # ToDo Remove lambda x and the random parameter 1
     logging.info("{} model was loaded successfully".format(args.model))
     if args.train:
-        model.train(dataset.train, dataset.dev, disable_tqdm=True)
+        model.train(dataset.train, dataset.dev, disable_tqdm=False)
         logging.info("{} model was trained successfully".format(args.model))
-    gold_data, predictions = model.predict(dataset.test, disable_tqdm=True)
+    gold_data, predictions = model.predict(dataset.test, disable_tqdm=False)
     logging.info("predictions were generated")
     
     # Evaluate

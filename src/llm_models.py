@@ -18,14 +18,13 @@ class LLMWrapper:
         scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps = 200, num_training_steps = epochs * (len(train_loader) // batch_size))
 
         for i, epoch in enumerate(range(epochs)):
-            sum_loss = 0.0
             for _, batch in enumerate(tqdm(train_dataloader, disable=disable_tqdm)):
-                for sample in batch:
-                    code_tokens = torch.tensor(self.tokenizer.encode(' '.join(sample["code"]))).unsqueeze(0).to(next(self.model.parameters()).device)
-                    outputs = model(code_tokens, labels=code_tokens)
-                    loss, logits = outputs[:2] 
-                    sum_loss += loss.detach().data     
-                    loss.backward()
+                input_ids = batch.to(next(self.model.parameters()).device)
+                attention_mask = (batch != self.tokenizer.pad_token_id).bool()
+                labels = batch.to(next(self.model.parameters()).device)
+                outputs = model(input_ids=input_ids, attention_mask=attention_mask, labels=labels)
+                loss = outputs.loss
+                loss.backward()
                 optimizer.step()
                 scheduler.step() 
                 optimizer.zero_grad()
