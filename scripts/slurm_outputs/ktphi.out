@@ -2,3 +2,14 @@
 2024-05-05 05:51:54 INFO     kotlin dataset was loaded successfully
 2024-05-05 05:51:59 INFO     We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
 2024-05-05 05:52:03 INFO     phi model was loaded successfully
+2024-05-05 06:14:27 INFO     predictions were generated
+2024-05-05 06:14:31 INFO     Total 7418640 tokens, accuracy: 62.49
+2024-05-05 06:14:31 INFO     Final accuracy on the test dataset: 62.489944248541505 %
+{
+    "kotlin_phi": {
+        "accuracy": 0.6248994424854151
+    }
+}
+slurmstepd: error: common_file_write_uint32s: write pid 468274 to /sys/fs/cgroup/cgroup.procs failed: Device or resource busy
+slurmstepd: error: Unable to move pid 468274 to init root cgroup /sys/fs/cgroup
+slurmstepd: error: error unlocking cgroup '/sys/fs/cgroup/system.slice/slurmstepd.scope' : Bad file descriptor

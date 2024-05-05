@@ -1,3 +1,14 @@
 2024-05-05 03:48:42 INFO     python dataset was loaded successfully
 2024-05-05 03:48:47 INFO     We will use 90% of the memory on device 0 for storing the model, and 10% for the buffer to avoid OOM. You can set `max_memory` in to a higher value to use more memory (at your own risk).
 2024-05-05 03:48:51 INFO     phi model was loaded successfully
+2024-05-05 07:36:26 INFO     predictions were generated
+2024-05-05 07:36:42 INFO     Total 35925335 tokens, accuracy: 71.48
+2024-05-05 07:36:42 INFO     Final accuracy on the test dataset: 71.48021862565791 %
+{
+    "python_phi": {
+        "accuracy": 0.7148021862565791
+    }
+}
+slurmstepd: error: common_file_write_uint32s: write pid 467278 to /sys/fs/cgroup/cgroup.procs failed: Device or resource busy
+slurmstepd: error: Unable to move pid 467278 to init root cgroup /sys/fs/cgroup
+slurmstepd: error: error unlocking cgroup '/sys/fs/cgroup/system.slice/slurmstepd.scope' : Bad file descriptor

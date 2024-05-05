@@ -20,6 +20,7 @@ parser.add_argument('--dataset', type=str, default='python')
 parser.add_argument('--model', type=str, default='phi')
 parser.add_argument('--train', type=bool, default=False)
 parser.add_argument('--disable_tqdm', type=bool, default=False)
+parser.add_argument('--evaluate_on_python_data', type=bool, default=False)
 parser.add_argument('--seed', type=int, help='random seed', default=54)
 
 
@@ -59,7 +60,7 @@ def main(args):
         logging.info("{} model was trained successfully".format(args.model))
     gold_data, predictions = model.predict(dataset.test, disable_tqdm=args.disable_tqdm)
     logging.info("predictions were generated")
-    
+
     # Evaluate
     accuracy = evaluate(gold_data, predictions)
     logging.info("Final accuracy on the test dataset: {} %".format(accuracy*100))
@@ -69,8 +70,25 @@ def main(args):
             "accuracy": accuracy
         }
     }
-    final_json = json.dumps(scores, indent = 4) 
+    final_json = json.dumps(scores, indent = 4)
     print(final_json)
+
+    
+    if args.evaluate_on_python_data: # kind of messy but the task description asks for this
+        dataset = DATASETS["python"](1) # ToDo Remove lambda x and the random parameter 1
+        logging.info("{} dataset was loaded successfully".format("python"))
+        gold_data, predictions = model.predict(dataset.test, disable_tqdm=args.disable_tqdm)
+        logging.info("predictions were generated")
+        accuracy = evaluate(gold_data, predictions)
+        logging.info("Final accuracy on the test dataset: {} %".format(accuracy*100))
+        scores = {
+            "{}_{}".format("python", args.model):
+            {
+                "accuracy": accuracy
+            }
+        }
+        final_json = json.dumps(scores, indent = 4)
+        print(final_json)
 
 
 if __name__ == '__main__':

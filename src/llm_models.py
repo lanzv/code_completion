@@ -12,12 +12,12 @@ class LLMWrapper:
         self.tokenizer = AutoTokenizer.from_pretrained(model_name, sep_token="<EOL>", bos_token="<s>", eos_token="</s>", pad_token="<pad>")
         self.model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype="auto", device_map="auto")
 
-    def train(self, train, dev, epochs=1, batch_size=2, learning_rate=3e-5, disable_tqdm=False):
+    def train(self, train, dev, epochs=3, batch_size=2, learning_rate=5e-4, disable_tqdm=False):
         train_dataloader = DataLoader(dataset=train, batch_size=batch_size, shuffle=True, collate_fn=self.__collate_tokenize)
 
         self.model.train()
         optimizer = AdamW(self.model.parameters(), lr=learning_rate)
-        scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps = 200, num_training_steps = epochs * (len(train_dataloader) // batch_size))
+        scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps = 10, num_training_steps = epochs * (len(train_dataloader) // batch_size))
 
         for i, epoch in enumerate(range(epochs)):
             for _, batch in enumerate(tqdm(train_dataloader, disable=disable_tqdm)):
@@ -32,9 +32,9 @@ class LLMWrapper:
                 optimizer.zero_grad()
                 self.model.zero_grad()
             # Evaluate dev after each epoch
-            gd, prds = self.predict(dev)
-            logging.info("Epoch: {} \t Dev accuracy: {}".format(i, evaluate(gd, prds)))
-            self.model.train()
+            #gd, prds = self.predict(dev, disable_tqdm)
+            #logging.info("Epoch: {} \t Dev accuracy: {}".format(i, evaluate(gd, prds)))
+            #self.model.train()
         
     
     def predict(self, test, batch_size=8, disable_tqdm=False):
