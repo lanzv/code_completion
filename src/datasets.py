@@ -31,4 +31,4 @@ class KotlinDataset:
         self.train = splited_train["train"]
         self.dev = splited_train["test"]
         self.test = dataset["test"]
-        logging.info{"Kotlin dataset is prepared, train: {}, dev: {}, test: {}".format(len(self.train), len(self.dev), len(self.test))}
+        logging.info("Kotlin dataset is prepared, train: {}, dev: {}, test: {}".format(len(self.train), len(self.dev), len(self.test)))

@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default='python')
 parser.add_argument('--model', type=str, default='phi')
 parser.add_argument('--train', type=bool, default=False)
+parser.add_argument('--disable_tqdm', type=bool, default=False)
 parser.add_argument('--seed', type=int, help='random seed', default=54)
 
 
@@ -34,7 +35,7 @@ MODELS = {
 
 DATASETS = {
     "python": lambda x: PythonDataset(dataset_name="code_x_glue_cc_code_completion_token"),
-    "kotlin": lambda x: KotlinDataset(dataset_path="")
+    "kotlin": lambda x: KotlinDataset(dataset_path="./data/kotlin.json")
 }
 
 
@@ -54,9 +55,9 @@ def main(args):
     model = MODELS[args.model](1) # ToDo Remove lambda x and the random parameter 1
     logging.info("{} model was loaded successfully".format(args.model))
     if args.train:
-        model.train(dataset.train, dataset.dev, disable_tqdm=False)
+        model.train(dataset.train, dataset.dev, disable_tqdm=args.disable_tqdm)
         logging.info("{} model was trained successfully".format(args.model))
-    gold_data, predictions = model.predict(dataset.test, disable_tqdm=False)
+    gold_data, predictions = model.predict(dataset.test, disable_tqdm=args.disable_tqdm)
     logging.info("predictions were generated")
     
     # Evaluate

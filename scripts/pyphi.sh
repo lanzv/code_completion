@@ -8,4 +8,4 @@
 
 
 
-python3 run_experiment.py --model phi --dataset python
+python3 run_experiment.py --model phi --dataset python --disable_tqdm True
