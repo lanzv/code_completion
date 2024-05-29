@@ -1,6 +1,6 @@
 # Code Completion Task
 
-This is the JetBrains Code Completion Interview Task. Our goal is to get the interview. To be more precise, we want to measure performance of the LLM Phi-1.5 model on the Python and Kotlin Code Completion datasets. But first we need to create the Kotlin dataset. This is a Readme that will briefly introduce the problem, datasets and experiments. The Research on this task itself is at the beggining a should be researched and be debugged in more detail in the future.
+This is the Code Completion Task. To be more precise, we want to measure performance of the LLM Phi-1.5 model on the Python and Kotlin Code Completion datasets. But first we need to create the Kotlin dataset. This is a Readme that will briefly introduce the problem, datasets and experiments. The Research on this task itself is at the beggining a should be researched and be debugged in more detail in the future.
 
 
 Definition of the code completion task:
